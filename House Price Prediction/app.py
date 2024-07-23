@@ -1,41 +1,64 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import joblib
+import pickle
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
-class PredictionInput(BaseModel):
+app = FastAPI()
+
+df = pd.read_csv('House Prices.csv')
+df = df.drop(columns='ID')
+X = df.drop(columns='medv')
+scaler = StandardScaler()
+scaler.fit(X)
+
+with open('scaler.pkl', 'wb') as f:
+    pickle.dump(scaler, f)
+
+with open('scaler.pkl', 'rb') as f:
+    scaler = pickle.load(f)
+
+with open('stacking_regressor_model.pkl', 'rb') as f:
+    model = pickle.load(f)
+
+# Define the request body using Pydantic
+class HouseData(BaseModel):
     crim: float
     zn: float
     indus: float
-    chas: float
+    chas: int
     nox: float
     rm: float
     age: float
     dis: float
-    rad: float
+    rad: int
     tax: float
     ptratio: float
     black: float
     lstat: float
 
-scaler = joblib.load('scaler.pkl')
-model = joblib.load('best_stacking_regressor.pkl')
-
-app = FastAPI()
-
+# Define the prediction endpoint
 @app.post("/predict")
-async def predict(input_data: PredictionInput):
-    #convert input data to numpy array
-    data = np.array([[input_data.crim, input_data.zn, input_data.indus, input_data.chas,
-                    input_data.nox, input_data.rm, input_data.age, input_data.dis,
-                    input_data.rad, input_data.tax, input_data.ptratio, input_data.black,
-                    input_data.lstat]])
+def predict(data: HouseData):
+    try:
+        # Convert the input data to a numpy array
+        input_data = np.array([[
+            data.crim, data.zn, data.indus, data.chas, data.nox, data.rm,
+            data.age, data.dis, data.rad, data.tax, data.ptratio, data.black, data.lstat
+        ]])
 
-    #scale the input data
-    data_scaled = scaler.transform(data)
-    prediction = model.predict(data_scaled)
-    return {"medv": prediction[0]}
+        
+        input_data_scaled = scaler.transform(input_data)
+        prediction = model.predict(input_data_scaled)
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+        # Return the prediction
+        return {"medv": prediction[0]}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/")
+def read_root():
+    return {"Welcome to the House Price Prediction API"}
