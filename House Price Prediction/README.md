@@ -147,5 +147,5 @@
 <ul>
   <li><code>app.py</code> - Contains the FastAPI application for deploying the model.</li>
   <li><code>scaler.pkl</code> - Saved StandardScaler used for scaling input features.</li>
-  <li><code>best_stacking_regressor.pkl</code> - Saved best model (Stacking Regressor).</li>
+  <li><code>stacking_regressor_model.pkl</code> - Saved best model (Stacking Regressor).</li>
 </ul>
