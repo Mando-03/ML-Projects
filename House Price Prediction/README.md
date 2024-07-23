@@ -56,14 +56,13 @@
   <li><strong>Mean Squared Error (MSE):</strong> Average of the squares of the differences between predicted and actual values, indicating the model's variance.</li>
   <li><strong>Root Mean Squared Error (RMSE):</strong> Square root of the average of the squares of the differences between predicted and actual values, providing a measure of the model's accuracy in the same units as the target variable.</li>
 </ul>
-<p>The best-performing model achieved an R2 score of 0.956 demonstrating its potential for real-world applications.</p>
+<p>The best-performing model was Extra Trees Regressor.</p>
 
 <h2>Hyperparameter Tuning</h2>
 <p>We have done parameter tuning using GridSearchCV for:</p>
 <ul>
   <li><strong>Extra Trees Regressor</strong></li>
   <li><strong>Gradient Boosting Regressor</strong></li>
-  <li><strong>Random Forest</strong></li>
 </ul>
 
 <h2>Ensemble Methods</h2>
@@ -72,43 +71,22 @@
   <li><strong>Voting Regressor:</strong> Combined predictions from multiple models based on weighted average.</li>
   <li><strong>Stacking Regressor:</strong> Combined predictions from multiple models using a meta-learner.</li>
 </ul>
-<p>With Stacking Regression we achieved an R2 score of 0.956, MAE of 1.643, and MSE of 4.417. We chose the Stacking Regression Model for further work.</p>
+<p>With Stacking Regression Outperforms others in this case so We chose Stacking Regression Model for further work.</p>
 
 <h2>Deployment</h2>
 <p>We deployed the best model using FastAPI. The following steps outline how to run the deployment:</p>
 
-
-<h2>Prerequisites</h2>
-<ul>
-  <li>Docker must be installed on your system.</li>
-</ul>
-<h3>Building the Docker Image</h3>
-<ol>
-  <li>Clone the repository:
-    <pre><code>git clone https://github.com/yourusername/boston-housing-prediction.git
-    cd boston-housing-prediction
-    </code></pre>
-  </li>
-  <li>Build the Docker image:
-    <pre><code>docker build -t boston-housing-prediction .
-    </code></pre>
-  </li>
-</ol>
-<h3>Running the Docker Container</h3>
-<ol>
-  <li>Run the Docker container:
-    <pre><code>docker run -d -p 8000:8000 boston-housing-prediction
-    </code></pre>
-  </li>
-</ol>
 
 
 <h3>Requirements</h3>
 <ul>
   <li>Python 3.7 or higher</li>
   <li>FastAPI</li>
+  <li>pandas</li>
+  <li>scikit-learn</li>
+  <li>pydantic</li>
   <li>Uvicorn</li>
-  <li>Joblib</li>
+  <li>pickle</li>
   <li>NumPy</li>
 </ul>
 <h3>Installation</h3>
@@ -170,5 +148,5 @@
 <ul>
   <li><code>app.py</code> - Contains the FastAPI application for deploying the model.</li>
   <li><code>scaler.pkl</code> - Saved StandardScaler used for scaling input features.</li>
-  <li><code>best_stacking_regressor.pkl</code> - Saved best model (Stacking Regressor).</li>
+  <li><code>stacking_regressor_model.pkl</code> - Saved best model (Stacking Regressor).</li>
 </ul>
