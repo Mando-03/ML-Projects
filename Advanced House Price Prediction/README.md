@@ -70,6 +70,8 @@ The following models were used:
 6. **Voting Regressor**: Combines the predictions of multiple models for improved accuracy.
 7. **Stacking Regressor**: Combines base models and uses a final estimator to make predictions.
 
+--
+
 ## Evaluation Metrics
 
 The models were evaluated using the following metrics:
@@ -97,3 +99,18 @@ To load and use the model:
 import joblib
 model = joblib.load('Savings/voting_regressor_model.pkl')
 ```
+
+---
+
+## MLFlow Integration
+
+To improve experiment tracking and model reproducibility, we have integrated **MLFlow** to systematically track model parameters, metrics, and logs. Below is the summary of MLFlow implementation:
+
+1. **Setup MLFlow Experiment**: We initialize an MLFlow experiment for tracking all model runs.
+
+2. **Model Training and Logging**: The models are trained and their parameters, metrics (such as MAE, MSE, RMSE, R²), and models are logged to MLFlow.
+
+3. **Saving Models in MLFlow**: Models are saved in the MLFlow tracking server, ensuring that each experiment is logged and easily accessible.
+
+This will allow you to track multiple experiments with different models and configurations. By using MLFlow, you'll be able to keep track of all the hyperparameters, metrics, and the final model that performs best, ensuring reproducibility and easy comparison of results across different model configurations.
+
