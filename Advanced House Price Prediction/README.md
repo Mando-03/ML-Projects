@@ -10,7 +10,7 @@ This project aims to predict house prices using various machine learning models.
 The goal of this project is to predict house prices based on the Ames Housing Dataset. The project goes through the entire process of data cleaning, feature engineering, and implementing various machine learning models, including ensemble techniques like Voting and Stacking regressors, to improve prediction accuracy.
 
 ## Table of Contents
-
+ 
 - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Feature Engineering](#feature-engineering)
